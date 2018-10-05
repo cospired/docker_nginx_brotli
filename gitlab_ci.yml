@@ -1,0 +1,12 @@
+stages:
+  - build
+
+setup:
+  image: docker:latest
+  stage: build
+  script:
+    - ./build.sh
+  only:
+    - master
+  tags:
+    - amd64
