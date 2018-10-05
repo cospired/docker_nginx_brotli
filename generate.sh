@@ -4,8 +4,6 @@ set -e
 
 NGINX_VERSION=1.14.0
 
-apk add git
-
 rm -rf docker-nginx
 git clone https://github.com/nginxinc/docker-nginx.git
 
@@ -34,10 +32,7 @@ sed '/CONFIG=/s/.*/\&\& apk add --no-cache --virtual .brotli-build-deps \\\
 
 sed '/rm -rf \/usr\/src/s/.*/&\
 	\&\& rm -rf \/usr\/src\/ngx_brotli \\\
-	\&\& apk del .brotli-build-deps \\\ /' tmp2 > Dockerfile
+	\&\& apk del .brotli-build-deps \\\ /' tmp2 > ../../../Dockerfile
 
 rm tmp*
 
-docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
-docker build -t ${CI_REGISTRY_IMAGE}:latest -t ${CI_REGISTRY_IMAGE}:${NGINX_VERSION} .
-docker push ${CI_REGISTRY_IMAGE}
