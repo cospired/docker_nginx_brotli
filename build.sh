@@ -10,7 +10,7 @@ rm -rf docker-nginx
 git clone https://github.com/nginxinc/docker-nginx.git
 
 cd docker-nginx
-git checkout $NGINX_VERSION
+git checkout ${NGINX_VERSION}
 
 cd stable/alpine
 
@@ -38,5 +38,6 @@ sed '/rm -rf \/usr\/src/s/.*/&\
 
 rm tmp*
 
-docker build -t dockerhub.io-labs.de:443/cospired/docker/nginx_brotli:latest -t dockerhub.io-labs.de:443/cospired/docker/nginx_brotli:$NGINX_VERSION .
-docker push dockerhub.io-labs.de:443/cospired/docker/nginx_brotli
+docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
+docker build -t ${CI_REGISTRY_IMAGE}:latest -t ${CI_REGISTRY_IMAGE}:${NGINX_VERSION} .
+docker push ${CI_REGISTRY_IMAGE}
