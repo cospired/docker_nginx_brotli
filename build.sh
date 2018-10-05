@@ -4,6 +4,8 @@ set -e
 
 NGINX_VERSION=1.14.0
 
+apk add git
+
 rm -rf docker-nginx
 git clone https://github.com/nginxinc/docker-nginx.git
 
